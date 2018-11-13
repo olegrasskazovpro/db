@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.11, for macos10.13 (x86_64)
 --
--- Host: 192.168.1.30    Database: countries
+-- Host: 192.168.1.20    Database: countries
 -- ------------------------------------------------------
 -- Server version	8.0.12
 
@@ -24,9 +24,12 @@ DROP TABLE IF EXISTS `regions`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `regions` (
   `id` int(11) NOT NULL,
-  `country` smallint(3) NOT NULL,
-  `region` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  `country` int(11) DEFAULT NULL,
+  `title` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `regions_ind` (`title`),
+  KEY `regions_country_fk` (`country`),
+  CONSTRAINT `regions_country_fk` FOREIGN KEY (`country`) REFERENCES `countries` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-09 12:51:55
+-- Dump completed on 2018-11-13 18:38:07

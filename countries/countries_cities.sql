@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.11, for macos10.13 (x86_64)
 --
--- Host: 192.168.1.30    Database: countries
+-- Host: 192.168.1.20    Database: countries
 -- ------------------------------------------------------
 -- Server version	8.0.12
 
@@ -23,12 +23,18 @@ DROP TABLE IF EXISTS `cities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `cities` (
-  `id` bigint(64) NOT NULL AUTO_INCREMENT,
-  `country` smallint(3) NOT NULL,
-  `region` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) NOT NULL,
+  `important` tinyint(1) NOT NULL,
+  `region_id` int(11) NOT NULL,
   `district` int(11) DEFAULT NULL,
-  `city` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  `title` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cities_ind` (`title`),
+  KEY `cities_country_fk` (`country_id`),
+  KEY `cities_regions_fk` (`region_id`),
+  CONSTRAINT `cities_country_fk` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `cities_regions_fk` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-09 12:51:55
+-- Dump completed on 2018-11-13 18:38:07
